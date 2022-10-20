@@ -1,19 +1,32 @@
+
 //import liraries
 import { firebase } from '@react-native-firebase/auth';
-import React, { FC } from 'react';
-import { View, Text, StyleSheet,Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { Component,FC } from 'react';
+import { View, Text, StyleSheet ,Button} from 'react-native';
+
 
 // create a component
-const MyComponent : FC = () => {
-const signout =() =>{
-    firebase.auth().signOut();
-}
+const MyComponent = ({navigation}: {navigation: any}) => {
+   
+    const signOut =() =>{
+        firebase.auth().signOut();
+    }
+
+ 
+
     return (
         <View style={styles.container}>
-            <Text style={{color:'#000'}}>Sasi</Text>\
+            <Text>MyComponent</Text>
+            <View>
+                <Button
+                title='Signout'
+                onPress={signOut}/>
+            </View>
+
             <Button
-            title='signout'
-            onPress={signout}/>
+            title='Data'
+            onPress={() => navigation.navigate('DataScreen')}/>
         </View>
     );
 };
@@ -24,7 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ff0',
+        backgroundColor: '#2c0',
     },
 });
 

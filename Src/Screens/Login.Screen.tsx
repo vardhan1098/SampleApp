@@ -15,14 +15,14 @@ const App = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState<string |null>(null);
   const [password, setPassword] =useState<string |null>(null);
 
-  // const login = async () => {
-  //   if(email && password){
-  //     const{user} = await firebase.auth().signInWithEmailAndPassword(email,password)
-  //     // console.log("....... getting data",login)
-  //   }else{
-  //     Alert.alert('Missing Fields')
-  // //   }
-  // }
+  const login = async () => {
+    if(email && password){
+      const{user} = await firebase.auth().signInWithEmailAndPassword(email,password)
+      // console.log("....... getting data",login)
+    }else{
+      Alert.alert('Missing Fields')
+    }
+  }
 
   return (
     <View style={styles.board}>
@@ -42,15 +42,10 @@ const App = ({navigation}: {navigation: any}) => {
                     <Button
                     color='green'
                     title='Login'
+                    onPress={login}
                     />
                 </View>
-                
-                <View style={styles.Regbutton}> 
-                <Button
-                color='darkblue'
-                title='Register Screen'
-                onPress={() => navigation.navigate('RegisterScreen')}/>
-                </View>
+              
         </Card.Content>
      </Card>
       
@@ -72,13 +67,9 @@ const App = ({navigation}: {navigation: any}) => {
       justifyContent:"center",
     },
     button:{
-      margin:17,
-      
+      margin:17,  
     },
-    Regbutton:{
-      margin:17,
-      color:"red"
-    },
+   
     nor:{
       alignSelf:"center",
       color:"black"

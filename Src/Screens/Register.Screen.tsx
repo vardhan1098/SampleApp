@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   Button,
-  Alert
+  Alert,
+  Text
 } from 'react-native';
 import {Card} from 'react-native-paper';
 
@@ -15,7 +16,7 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
 
-const Register :FC =(Props) => {
+const Register  =({navigation}: {navigation: any}) => {
   const [name,setName] = React.useState<string|null>(null);
   const [email, setEmail] = React.useState<string|null>(null);
   const [password, setPassword] = React.useState<string|null>(null);
@@ -26,6 +27,7 @@ const signup = async () => {
       const user = await firebase.auth().createUserWithEmailAndPassword (email,password)
       if(user){
         await firebase.firestore().collection('users').doc(user.user.uid).set({name,email,password})
+        // Alert.alert(JSON.stringify(user))
       }
 
     }catch(error){
@@ -62,9 +64,13 @@ const signup = async () => {
                 <View style={styles.button}>
                     <Button
                     color='green'
-                    title='Sumbit'
+                    title='Signup'
                     onPress={signup}/>
                 </View> 
+                <View style={styles.chan}>
+                  <Text style={styles.com}>Already have an account ?</Text>
+                  <Text style={styles.num} onPress={() => navigation.navigate('LoginScreen')}> Signin</Text>
+                </View>
         </Card.Content>
      </Card>
     </View>
@@ -94,7 +100,18 @@ const signup = async () => {
     nor:{
       alignSelf:"center",
       color:"black"
+    },
+    com:{
+      textAlign:"center",
+    },
+    chan:{
+      alignSelf:"center",
+      flexDirection:"row"
+    },
+    num:{
+      color:"darkblue"
     }
+  
   });
 
 export default Register;
