@@ -4,52 +4,54 @@ import {
   View,
   StyleSheet,
   Button,
-  Alert
+  Alert,
+  Text
 } from 'react-native';
 import Input from '../Components/input';
-import {Card} from 'react-native-paper';
+
 import { firebase } from '@react-native-firebase/auth';
 
 
 const App = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState<string |null>(null);
   const [password, setPassword] =useState<string |null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const login = async () => {
+    console.log("first step..")
     if(email && password){
       const{user} = await firebase.auth().signInWithEmailAndPassword(email,password)
-      // console.log("....... getting data",login)
+      navigation.navigate("DataScreen")
+      console.log("....... getting data",login)
     }else{
+      setError("MiSSING FIELDS")
       Alert.alert('Missing Fields')
     }
   }
 
   return (
     <View style={styles.board}>
-        <Card>
-            <Card.Title title="LOGIN PAGE"></Card.Title>
-            <Card.Content>
+
                <Input
+                    testId={'Email'}
                     onChangeText={(text) =>setEmail(text)}
                     placeholder="Enter Email"
                 />
                 <Input
+                testId={'Password'}
                    onChangeText={(text) => setPassword(text)}
                     placeholder="Enter Password"
                     />
+                     {error !== null && <Text testID="ErrorMsg">{error}</Text>}
 
                 <View style={styles.button}>
                     <Button
+                    testID="SignIn.Button"
                     color='green'
                     title='Login'
                     onPress={login}
                     />
                 </View>
-              
-        </Card.Content>
-     </Card>
-      
-
     </View>
   )
   }

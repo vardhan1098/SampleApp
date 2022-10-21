@@ -1,8 +1,8 @@
 
 //import liraries
 import { firebase } from '@react-native-firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
-import React, { Component,FC } from 'react';
+
+import React, { Component} from 'react';
 import { View, Text, StyleSheet ,Button} from 'react-native';
 
 
@@ -18,7 +18,9 @@ const MyComponent = ({navigation}: {navigation: any}) => {
     return (
         <View style={styles.container}>
             <Text>MyComponent</Text>
-            <View>
+
+
+            <View style={{margin:10}}>
                 <Button
                 title='Signout'
                 onPress={signOut}/>

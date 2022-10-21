@@ -17,6 +17,7 @@ const bootstrap =() =>{
     
     firebase.auth().onAuthStateChanged(_user => {
         if(_user){
+            console.log(_user)
             setUser(_user)
         }
     })
@@ -24,6 +25,7 @@ const bootstrap =() =>{
 
 useEffect(()=>{
     bootstrap()
+    
 }, [])
 
 

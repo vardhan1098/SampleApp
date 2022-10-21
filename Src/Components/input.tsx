@@ -8,12 +8,14 @@ interface Props{
     placeholder:string;
     onChangeText:(text:string) => void;
     secureTextEntry?:boolean;
+    testId?:string;
 }
 
 const Input :FC<Props> =(props) =>{
       return(
         <View  style={styles.container}>
             <TextInput
+            testID={props.testId}
             style={styles.input}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}

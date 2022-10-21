@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import {
-
   TextInput,
   View,
   StyleSheet,
@@ -8,26 +7,33 @@ import {
   Alert,
   Text
 } from 'react-native';
-import {Card} from 'react-native-paper';
 
 import Input from '../Components/input';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
-import '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Register  =({navigation}: {navigation: any}) => {
   const [name,setName] = React.useState<string|null>(null);
   const [email, setEmail] = React.useState<string|null>(null);
   const [password, setPassword] = React.useState<string|null>(null);
+  const [error, setError] = React.useState<string | null>(null);
 
 const signup = async () => {
+console.log("==== first step")
   if(name && email && password){
+    console.log("=== second step")
     try{
+      console.log("=== third step")
       const user = await firebase.auth().createUserWithEmailAndPassword (email,password)
+      navigation.navigate('LoginScreen')
+      console.log("==== nsmd",user)
       if(user){
-        await firebase.firestore().collection('users').doc(user.user.uid).set({name,email,password})
-        // Alert.alert(JSON.stringify(user))
+        await AsyncStorage.setItem("user_data", JSON.stringify(user));
+        
+        navigation.navigate('LoginScreen')
+        console.log("=== getting up",signup);
       }
 
     }catch(error){
@@ -35,6 +41,7 @@ const signup = async () => {
     }
    
   }else{
+    setError("Missing Fields")
     Alert.alert(`Error`, `Missing the Fields`)
   }
 }
@@ -43,36 +50,39 @@ const signup = async () => {
 
   return (
     <View style={styles.board}>
-        <Card>
-            <Card.Title title="Registration"></Card.Title>
-            <Card.Content>
+           
                <Input
+                    testId ="Name"
                     onChangeText={(text) => setName(text) }
                     placeholder="Enter Full Name"
                 />
                 <Input
+                    testId='Email'
                    onChangeText={(text) => setEmail(text)}
                    placeholder="Enter your Email"
                     />
                 <Input
+                testId='Password'
                  onChangeText={(text) => setPassword(text)}
                  secureTextEntry={true}
                  placeholder="Enter your Password"
                   />
 
-
+            {error !== null && <Text testID="ErrorMsg">{error}</Text>}
                 <View style={styles.button}>
                     <Button
+                    testID="Register.Button"
                     color='green'
                     title='Signup'
                     onPress={signup}/>
                 </View> 
                 <View style={styles.chan}>
                   <Text style={styles.com}>Already have an account ?</Text>
-                  <Text style={styles.num} onPress={() => navigation.navigate('LoginScreen')}> Signin</Text>
+                  <Text style={styles.num}
+                  testID="Nav.Login"
+                   onPress={() => navigation.navigate('LoginScreen')}> Signin</Text>
                 </View>
-        </Card.Content>
-     </Card>
+    
     </View>
   )
   }

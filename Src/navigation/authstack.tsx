@@ -9,10 +9,10 @@ const {Navigator,Screen} = createNativeStackNavigator();
 const AuthStack : FC =() =>{
     return(
       
-    <Navigator>
+    <Navigator initialRouteName='RegisterScreen'>
       <Screen name="RegisterScreen" component={RegisterScreen}/>
       <Screen name="LoginScreen" component={LoginScreen} />
-      <Screen name ="DataScreen" component={DataScreen}/>
+      
       
     </Navigator>
  
